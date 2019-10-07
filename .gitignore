@@ -90,6 +90,6 @@ typings/
 # Sapper
 __sapper__/
 
-static/img/rooms/
+static/img/houses/
 
 .DS_Store

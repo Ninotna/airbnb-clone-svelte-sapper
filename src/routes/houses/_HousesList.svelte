@@ -1,10 +1,10 @@
 <script>
-  import Room from './_Room.svelte'
-  import rooms from './_rooms.js';
+  import House from './_House.svelte'
+  import houses from './_houses.js';
 </script>
 
 <style>
-  .rooms {
+  .houses {
     display: grid;
     grid-template-columns: 400px 400px 400px;
     grid-template-rows: 300px 300px;
@@ -15,9 +15,9 @@
 <div>
 	<h2>Places to stay</h2>
 
-  <div class="rooms">
-  {#each rooms as room}
-    <Room {...room} />
+  <div class="houses">
+  {#each houses as house}
+    <House {...house} />
   {/each}
   </div>
 </div>

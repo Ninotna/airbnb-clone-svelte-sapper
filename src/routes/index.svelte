@@ -1,5 +1,5 @@
 <script>
-import RoomsList from './rooms/_RoomsList.svelte'
+import HousesList from './houses/_HousesList.svelte'
 </script>
 
 <style>
@@ -10,5 +10,4 @@ import RoomsList from './rooms/_RoomsList.svelte'
 	<title>Airbnb Clone</title>
 </svelte:head>
 
-<p>Test</p>
-<RoomsList />
+<HousesList />

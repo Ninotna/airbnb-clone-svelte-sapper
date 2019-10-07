@@ -1,6 +1,6 @@
-const rooms = [
+const houses = [
 	{
-    picture: "/img/rooms/1.jpg",
+    picture: "/img/houses/1.jpg",
     type: "Entire house",
     town: "Ostuni",
     title: "Beautiful flat in Ostuni!",
@@ -9,7 +9,7 @@ const rooms = [
     superhost: true
   },
 	{
-    picture: "/img/rooms/2.jpg",
+    picture: "/img/houses/2.jpg",
     type: "Entire house",
     town: "Isla Mujeres",
     title: "The World Famous Seashell House ~ Casa Caracol",
@@ -19,4 +19,4 @@ const rooms = [
   }
 ]
 
-export default rooms
+export default houses

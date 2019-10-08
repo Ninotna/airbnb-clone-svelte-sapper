@@ -17,6 +17,20 @@
 	export let house
 </script>
 
+<style>
+.container {
+  display: grid;
+  grid-template-columns: 60% 40%;
+  grid-gap: 30px;
+}
+
+aside {
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin-top: 20px;
+}
+</style>
+
 <svelte:head>
 	<title>{house.title}</title>
 </svelte:head>
@@ -63,4 +77,8 @@
       <p>{review.comment}</p>
     {/each}
   </main>
+
+  <aside>
+    <h2>Add dates for prices</h2>
+  </aside>
 </div>

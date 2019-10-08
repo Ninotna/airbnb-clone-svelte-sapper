@@ -14,6 +14,7 @@
 </script>
 
 <script>
+  import DateRangePicker from './_DateRangePicker.svelte'
 	export let house
 </script>
 
@@ -80,5 +81,6 @@ aside {
 
   <aside>
     <h2>Add dates for prices</h2>
+    <DateRangePicker />
   </aside>
 </div>

@@ -1,5 +1,16 @@
 <script>
 import Datepicker from '../../lib/svelte-calendar-1.0.10/src/Components/Datepicker.svelte'
+const dateFormat = '#{l}, #{F} #{j}, #{Y}';
+
+let startDate = new Date()
+let endDate = new Date()
+
+const startDateSelectableCallback = date => {
+  return true
+}
+const endDateSelectableCallback = date => {
+  return true
+}
 </script>
 
 <style>
@@ -12,11 +23,19 @@ import Datepicker from '../../lib/svelte-calendar-1.0.10/src/Components/Datepick
 </style>
 
 <div class="date-range-picker-container">
-  <Datepicker>
-    <div class="check-in">Check-in</div>
+  <Datepicker
+    format='{dateFormat}'
+    start={new Date()}
+    selectableCallback={startDateSelectableCallback}
+    on:dateSelected={e => { startDate = new Date(e.detail.date) }}>
+    <div class="check-in">{`${startDate.getDate()} ${startDate.toLocaleString('default', { month: 'long' })}`}</div>
   </Datepicker>
   <div class="arrow">➡️</div>
-  <Datepicker>
-    <div class="check-out">Checkout</div>
+  <Datepicker
+    format='{dateFormat}'
+    start={new Date()}
+    selectableCallback={endDateSelectableCallback}
+    on:dateSelected={e => { endDate = new Date(e.detail.date) }}>
+    <div class="check-in">{`${endDate.getDate()} ${endDate.toLocaleString('default', { month: 'long' })}`}</div>
   </Datepicker>
 </div>

@@ -3,12 +3,39 @@ import Datepicker from '../../lib/svelte-calendar-1.0.10/src/Components/Datepick
 const dateFormat = '#{l}, #{F} #{j}, #{Y}';
 
 let startDate = new Date()
-let endDate = new Date()
+let endDate = new Date(startDate.getTime() + 1000 * 3600 * 24)
 
 const startDateSelectableCallback = date => {
   return true
 }
-const endDateSelectableCallback = date => {
+
+const firstDateIsPastDayComparedToSecond = (firstDate, secondDate) => {
+  if (firstDate.setHours(0,0,0,0) - secondDate.setHours(0,0,0,0) >= 0) { //first date is in future, or it is today
+    return false
+  }
+
+  return true
+}
+
+let endDateSelectableCallback = date => {
+  const today = new Date()
+
+  if (date.getTime() - startDate.getTime() < 0) {
+    return false
+  }
+
+  if (date.getFullYear() === today.getFullYear() &&
+    date.getMonth() === today.getMonth() &&
+    date.getDate() === today.getDate()) {
+      return false
+  }
+
+  if (date.getFullYear() === startDate.getFullYear() &&
+    date.getMonth() === startDate.getMonth() &&
+    date.getDate() === startDate.getDate()) {
+      return false
+  }
+
   return true
 }
 </script>
@@ -27,7 +54,13 @@ const endDateSelectableCallback = date => {
     format='{dateFormat}'
     start={new Date()}
     selectableCallback={startDateSelectableCallback}
-    on:dateSelected={e => { startDate = new Date(e.detail.date) }}>
+    on:dateSelected={e => {
+      startDate = new Date(e.detail.date)
+      if (!firstDateIsPastDayComparedToSecond(startDate, endDate)) {
+        endDate = new Date(startDate.getTime() + 1000 * 3600 * 24)
+      }
+      endDateSelectableCallback = endDateSelectableCallback
+    }}>
     <div class="check-in">{`${startDate.getDate()} ${startDate.toLocaleString('default', { month: 'long' })}`}</div>
   </Datepicker>
   <div class="arrow">➡️</div>

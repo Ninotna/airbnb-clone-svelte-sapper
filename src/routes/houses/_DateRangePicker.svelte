@@ -1,5 +1,9 @@
 <script>
+import { createEventDispatcher } from 'svelte'
 import Datepicker from '../../lib/svelte-calendar-1.0.10/src/Components/Datepicker.svelte'
+
+const dispatch = createEventDispatcher()
+
 const dateFormat = '#{l}, #{F} #{j}, #{Y}';
 
 let startDate = new Date()
@@ -60,6 +64,11 @@ let endDateSelectableCallback = date => {
         endDate = new Date(startDate.getTime() + 1000 * 3600 * 24)
       }
       endDateSelectableCallback = endDateSelectableCallback
+
+      dispatch('datesChanged', {
+        startDate: startDate,
+        endDate: endDate
+      })
     }}>
     <div class="check-in">{`${startDate.getDate()} ${startDate.toLocaleString('default', { month: 'long' })}`}</div>
   </Datepicker>
@@ -68,7 +77,14 @@ let endDateSelectableCallback = date => {
     format='{dateFormat}'
     start={new Date()}
     selectableCallback={endDateSelectableCallback}
-    on:dateSelected={e => { endDate = new Date(e.detail.date) }}>
+    on:dateSelected={e => {
+      endDate = new Date(e.detail.date)
+
+      dispatch('datesChanged', {
+        startDate: startDate,
+        endDate: endDate
+      })
+    }}>
     <div class="check-in">{`${endDate.getDate()} ${endDate.toLocaleString('default', { month: 'long' })}`}</div>
   </Datepicker>
 </div>

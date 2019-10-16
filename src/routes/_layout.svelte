@@ -1,15 +1,13 @@
 <script>
 	import Nav from '../components/Nav.svelte'
 
-	export let segment
-
 	import Modal from '../components/Modal.svelte'
 	import LoginModal from '../components/LoginModal.svelte'
 	import RegistrationModal from '../components/RegistrationModal.svelte'
 
-	let showModal = true
-	let showLoginModal = true
-	let showRegistrationModal = false
+	export let segment
+
+	import { showModal, showLoginModal, showRegistrationModal } from '../store.js'
 </script>
 
 <style>
@@ -29,18 +27,18 @@
 	<slot></slot>
 </main>
 
-{#if showModal}
-	<Modal on:close={() => showModal = false}>
-		{#if showLoginModal}
+{#if $showModal}
+	<Modal on:close={() => showModal.set(false)}>
+		{#if $showLoginModal}
 			<LoginModal on:showSignup={() => {
-				showLoginModal = false
-				showRegistrationModal = true
+				showLoginModal.set(false)
+				showRegistrationModal.set(true)
 			}}></LoginModal>
 		{/if}
-		{#if showRegistrationModal}
+		{#if $showRegistrationModal}
 			<RegistrationModal on:showLogin={() => {
-				showLoginModal = true
-				showRegistrationModal = false
+				showLoginModal.set(true)
+				showRegistrationModal.set(false)
 			}}></RegistrationModal>
 		{/if}
 	</Modal>

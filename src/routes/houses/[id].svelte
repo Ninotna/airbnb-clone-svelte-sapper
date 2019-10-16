@@ -14,7 +14,10 @@
 </script>
 
 <script>
+  import { showModal, showLoginModal } from '../../store.js'
+
   import DateRangePicker from './_DateRangePicker.svelte'
+
   export let house
   let dateChosen = false
 
@@ -113,7 +116,10 @@ aside {
       <p>${house.price} x {numberOfNightsBetweenDates}</p>
 
       <p><strong>Total</strong> ${house.price * numberOfNightsBetweenDates}</p>
-      <button class="reserve">Reserve</button>
+      <button class="reserve styled" on:click={() => {
+        showModal.set(true)
+        showLoginModal.set(true)
+      }}>Reserve</button>
     {/if}
   </aside>
 </div>

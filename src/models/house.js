@@ -17,7 +17,7 @@ House.init({
   title: { type: DataTypes.STRING, allowNull: false },
   price: { type: DataTypes.INTEGER, allowNull: false },
   superhost: { type: DataTypes.BOOLEAN, allowNull: false },
-  description: { type: DataTypes.STRING, allowNull: false },
+  description: { type: DataTypes.TEXT },
   guests: { type: DataTypes.INTEGER, allowNull: false },
   bedrooms: { type: DataTypes.INTEGER, allowNull: false },
   beds: { type: DataTypes.INTEGER, allowNull: false },

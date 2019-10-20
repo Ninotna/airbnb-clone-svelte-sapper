@@ -14,9 +14,9 @@ import User from './models/user.js'
 import House from './models/house.js'
 import Review from './models/review.js'
 
-User.sync()
-House.sync()
-Review.sync()
+User.sync({ alter: true })
+House.sync({ alter: true })
+Review.sync({ alter: true })
 
 const sessionStore = new SequelizeStore({
 	db: sequelize

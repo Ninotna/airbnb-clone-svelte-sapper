@@ -1,7 +1,7 @@
 <script context="module">
 	export async function preload({ params, query }) {
-		// the `slug` parameter is available because
-		// this file is called [slug].svelte
+		// the `id` parameter is available because
+		// this file is called [id].svelte
 		const res = await this.fetch(`houses/${params.id}.json`)
 		const data = await res.json()
 

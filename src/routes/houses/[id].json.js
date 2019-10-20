@@ -16,7 +16,6 @@ export function get(req, res, next) {
 			}).then(reviews => {
 				house.dataValues.reviews = reviews.rows.map(review => review.dataValues)
 				house.dataValues.reviewsCount = reviews.count
-				console.log(house.dataValues)
 				res.writeHead(200, {
 					'Content-Type': 'application/json'
 				})

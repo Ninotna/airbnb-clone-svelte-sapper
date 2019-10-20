@@ -125,16 +125,10 @@ aside {
 
       <p><strong>Total</strong> ${house.price * numberOfNightsBetweenDates}</p>
 
-      {#if $session.user}
-        <button class="reserve styled" on:click={() => {
-          alert('x')
-        }}>Reserve now</button>
-      {:else}
-        <button class="reserve styled" on:click={() => {
-          showModal.set(true)
-          showLoginModal.set(true)
-        }}>Log in to Reserve</button>
-      {/if}
+      <button class="reserve styled" on:click={() => {
+        showModal.set(true)
+        showLoginModal.set(true)
+      }}>Reserve</button>
     {/if}
   </aside>
 </div>

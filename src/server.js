@@ -8,7 +8,15 @@ import passport from 'passport'
 import { Strategy as LocalStrategy } from 'passport-local'
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
 
-import { User, sequelize } from './model.js'
+import { sequelize } from './database.js'
+
+import User from './models/user.js'
+import House from './models/house.js'
+import Review from './models/review.js'
+
+User.sync()
+House.sync()
+Review.sync()
 
 const sessionStore = new SequelizeStore({
 	db: sequelize

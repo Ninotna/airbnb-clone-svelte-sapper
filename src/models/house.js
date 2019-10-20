@@ -10,7 +10,7 @@ House.init({
     autoIncrement: true,
     primaryKey: true
   },
-  hostName: { type: DataTypes.STRING, allowNull: false },
+  host: { type: DataTypes.INTEGER, allowNull: false },
   picture: { type: DataTypes.STRING, allowNull: false },
   type: { type: DataTypes.STRING, allowNull: false },
   town: { type: DataTypes.STRING, allowNull: false },

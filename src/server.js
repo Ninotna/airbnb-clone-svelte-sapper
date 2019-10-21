@@ -13,10 +13,12 @@ import { sequelize } from './database.js'
 import User from './models/user.js'
 import House from './models/house.js'
 import Review from './models/review.js'
+import Booking from './models/booking.js'
 
 User.sync({ alter: true })
 House.sync({ alter: true })
 Review.sync({ alter: true })
+Booking.sync({ alter: true })
 
 const sessionStore = new SequelizeStore({
 	db: sequelize

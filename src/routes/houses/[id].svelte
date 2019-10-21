@@ -14,7 +14,9 @@
 </script>
 
 <script>
-	import { stores } from '@sapper/app'
+  import { stores } from '@sapper/app'
+  import axios from 'axios'
+
   const { session } = stores()
 
   import { showModal, showLoginModal } from '../../store.js'
@@ -40,6 +42,22 @@
 
     return dayCount
   }
+
+  const reserve = async () => {
+    try {
+      const houseId = house.id
+      const response = await axios.post('houses/reserve', { houseId, startDate, endDate })
+      if (response.data.status === 'error') {
+        alert(response.data.message)
+        return
+      }
+      console.log(response.data)
+    } catch (error) {
+      console.log(error)
+      // alert(error.response.data.message)
+      return
+    }
+	}
 </script>
 
 <style>
@@ -79,7 +97,7 @@ aside {
 
     <p>{@html house.description}</p>
 
-    <a href="#">Contact host</a>
+    <a href="javascript:;">Contact host</a>
 
     <hr>
 
@@ -126,9 +144,7 @@ aside {
       <p><strong>Total</strong> ${house.price * numberOfNightsBetweenDates}</p>
 
       {#if $session.user}
-        <button class="reserve styled" on:click={() => {
-          alert('x')
-        }}>Reserve now</button>
+        <button class="reserve styled" on:click={reserve}>Reserve now</button>
       {:else}
         <button class="reserve styled" on:click={() => {
           showModal.set(true)

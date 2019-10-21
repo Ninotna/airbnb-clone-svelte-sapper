@@ -64,7 +64,27 @@
     return dayCount
   }
 
+  const canReserve = async () => {
+    try {
+      const houseId = house.id
+      const response = await axios.post('/houses/check', { houseId, startDate, endDate })
+      if (response.data.status === 'error') {
+        alert(response.data.message)
+        return
+      }
+
+      if (response.data.message === 'busy') return false
+      return true
+    } catch (error) {
+      console.error(error)
+      return
+    }
+  }
   const reserve = async () => {
+    if (!await canReserve()) {
+      alert('The dates chosen are not valid')
+      return
+    }
     try {
       const houseId = house.id
       const response = await axios.post('houses/reserve', { houseId, startDate, endDate })

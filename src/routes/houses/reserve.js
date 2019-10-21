@@ -1,26 +1,14 @@
-import { Op } from 'sequelize'
-
 import Booking from '../../models/booking.js'
 import User from '../../models/user.js'
+
+import canBookThoseDates from './_canBookThoseDates.js'
 
 export const post = async (req, res, next) => {
   const startDate = req.body.startDate
   const endDate = req.body.endDate
   const houseId = req.body.houseId
 
-  const results = await Booking.findAll({
-    where: {
-      houseId: houseId,
-      startDate: {
-        [Op.lte]: new Date(endDate)
-      },
-      endDate: {
-        [Op.gte]: new Date(startDate)
-      }
-    }
-  })
-
-  if (results.length > 0) {
+  if (!await canBookThoseDates(houseId, startDate, endDate)) {
     //busy
     res.writeHead(500, {
       'Content-Type': 'application/json'

@@ -2,6 +2,13 @@
 import { createEventDispatcher } from 'svelte'
 import Datepicker from '../../lib/svelte-calendar-1.0.10/src/Components/Datepicker.svelte'
 
+export let bookedDates //prop
+
+$: {
+  bookedDates
+  startDateSelectableCallback = startDateSelectableCallback
+  endDateSelectableCallback = endDateSelectableCallback
+}
 const dispatch = createEventDispatcher()
 
 const dateFormat = '#{l}, #{F} #{j}, #{Y}';
@@ -9,8 +16,25 @@ const dateFormat = '#{l}, #{F} #{j}, #{Y}';
 let startDate = new Date()
 let endDate = new Date(startDate.getTime() + 1000 * 3600 * 24)
 
-const startDateSelectableCallback = date => {
+const datesAreOnSameDay = (first, second) =>
+    first.getFullYear() === second.getFullYear() &&
+    first.getMonth() === second.getMonth() &&
+    first.getDate() === second.getDate()
+
+const dateIsSelectable = date => {
+  if (!bookedDates) {
+    return true
+  }
+  for (const bookedDate of bookedDates) {
+    if (datesAreOnSameDay(date, new Date(bookedDate))) {
+      return false
+    }
+  }
   return true
+}
+
+let startDateSelectableCallback = date => {
+  return dateIsSelectable(date) //already booked?
 }
 
 const firstDateIsPastDayComparedToSecond = (firstDate, secondDate) => {
@@ -22,6 +46,10 @@ const firstDateIsPastDayComparedToSecond = (firstDate, secondDate) => {
 }
 
 let endDateSelectableCallback = date => {
+  if (!dateIsSelectable(date)) { //already booked
+    return false
+  }
+
   const today = new Date()
 
   if (date.getTime() - startDate.getTime() < 0) {
@@ -54,6 +82,7 @@ let endDateSelectableCallback = date => {
 </style>
 
 <div class="date-range-picker-container">
+
   <Datepicker
     format='{dateFormat}'
     start={new Date()}

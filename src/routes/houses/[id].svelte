@@ -16,6 +16,7 @@
 <script>
   import { stores } from '@sapper/app'
   import axios from 'axios'
+	import { onMount } from 'svelte';
 
   const { session } = stores()
 
@@ -29,6 +30,26 @@
   let startDate = null
   let endDate = null
   let numberOfNightsBetweenDates = 0
+
+  const getBookedDates = async () => {
+    try {
+      const houseId = house.id
+      const response = await axios.post('/houses/booked', { houseId })
+      if (response.data.status === 'error') {
+        alert(response.data.message)
+        return
+      }
+      return response.data.dates
+    } catch (error) {
+      console.error(error)
+      return
+    }
+  }
+
+  let bookedDates = null
+  onMount(async () => {
+    bookedDates = await getBookedDates()
+	})
 
   const calcNumberOfNightsBetweenDates = (startDate, endDate) => {
     const start = new Date(startDate) //clone
@@ -134,7 +155,7 @@ aside {
       endDate = event.detail.endDate
       numberOfNightsBetweenDates = calcNumberOfNightsBetweenDates(startDate, endDate)
       dateChosen = true
-    }} />
+    }} bookedDates={bookedDates} />
 
     {#if dateChosen}
       <br>

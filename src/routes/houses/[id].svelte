@@ -6,9 +6,9 @@
 		const data = await res.json()
 
 		if (res.status === 200) {
-			return { house: data }
+      return { house: data }
 		} else {
-			this.error(res.status, data.message);
+			this.error(res.status, data.message)
 		}
 	}
 </script>
@@ -16,7 +16,7 @@
 <script>
   import { stores } from '@sapper/app'
   import axios from 'axios'
-	import { onMount } from 'svelte';
+	import { onMount } from 'svelte'
 
   const { session } = stores()
 
@@ -80,24 +80,34 @@
       return
     }
   }
+
   const reserve = async () => {
     if (!await canReserve()) {
       alert('The dates chosen are not valid')
       return
     }
-    try {
-      const houseId = house.id
-      const response = await axios.post('houses/reserve', { houseId, startDate, endDate })
-      if (response.data.status === 'error') {
-        alert(response.data.message)
-        return
-      }
-      console.log(response.data)
-    } catch (error) {
-      console.log(error)
-      // alert(error.response.data.message)
+
+
+    const sessionResponse = await axios.post('stripe/session', { amount: house.price * numberOfNightsBetweenDates })
+    if (sessionResponse.data.status === 'error') {
+      alert(sessionResponse.data.message)
       return
     }
+
+    const sessionId = sessionResponse.data.sessionId
+    const stripePublicKey = sessionResponse.data.stripePublicKey
+    const houseId = house.id
+
+    const reserveResponse = await axios.post('houses/reserve', { houseId, startDate, endDate, sessionId })
+    if (reserveResponse.data.status === 'error') {
+      alert(reserveResponse.data.message)
+      return
+    }
+
+    const stripe = Stripe(stripePublicKey)
+    const { error } = await stripe.redirectToCheckout({
+      sessionId
+    })
 	}
 </script>
 

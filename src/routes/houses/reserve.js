@@ -7,6 +7,7 @@ export const post = async (req, res, next) => {
   const startDate = req.body.startDate
   const endDate = req.body.endDate
   const houseId = req.body.houseId
+  const sessionId = req.body.sessionId
 
   if (!await canBookThoseDates(houseId, startDate, endDate)) {
     //busy
@@ -33,13 +34,14 @@ export const post = async (req, res, next) => {
     return
   }
   const userEmail = req.session.passport.user
-  User.findOne({ where: {email: userEmail}}).then(user => {
+  User.findOne({ where: { email: userEmail }}).then(user => {
 
     Booking.create({
-      houseId: houseId,
+      houseId,
       userId: user.id,
-      startDate: startDate,
-      endDate: endDate
+      startDate,
+      endDate,
+      sessionId
     })
     .then(() => {
       res.writeHead(200, {
@@ -49,5 +51,4 @@ export const post = async (req, res, next) => {
     })
 
 	})
-
 }

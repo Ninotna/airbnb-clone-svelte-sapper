@@ -19,6 +19,7 @@
 	<!-- This contains the contents of the <svelte:head> component, if
 	     the current page has one -->
 	%sapper.head%
+
 </head>
 <body>
 	<!-- The application will be rendered inside this element,
@@ -29,5 +30,6 @@
 	     and anything else it needs to hydrate the app and
 	     initialise the router -->
 	%sapper.scripts%
+	<script src="https://js.stripe.com/v3/"></script>
 </body>
 </html>

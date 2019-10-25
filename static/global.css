@@ -40,7 +40,7 @@ button.styled {
 	cursor: pointer;
 }
 
-input[type=text], input[type=email], input[type=password] {
+input[type=text], input[type=email], input[type=password], input[type=number], select, textarea {
   display: block;
   padding: 20px;
   font-size: 20px!important;

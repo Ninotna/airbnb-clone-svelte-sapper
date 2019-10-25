@@ -73,6 +73,7 @@
     <ul>
       {#if $session.user}
         <li style="padding: 1em 0.5em;">{$session.user}</li>
+        <li><a href="/host/new">Add house</a></li>
         <li><a href="/host">Your houses</a></li>
         <li><a href="/bookings">Bookings</a></li>
         <li><a href='javascript:;' on:click={async () => {

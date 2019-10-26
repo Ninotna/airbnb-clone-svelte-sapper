@@ -141,14 +141,7 @@ aside {
     <p><strong>{house.type}</strong></p>
     <p>{house.guests} guests - {house.bedrooms} bedrooms - {house.beds} beds - {house.baths} baths</p>
 
-    {#if house.superhost === true}
-      <p><strong>{house.hostName} is a Superhost</strong></p>
-      <p>Superhosts are experienced, highly rated hosts who are committed to providing great stays for guests.</p>
-    {/if}
-
     <p>{@html house.description}</p>
-
-    <a href="javascript:;">Contact host</a>
 
     <hr>
 

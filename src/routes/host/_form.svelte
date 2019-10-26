@@ -1,6 +1,7 @@
 <script>
-  import { createEventDispatcher } from 'svelte'
+  import { createEventDispatcher, onMount } from 'svelte'
   const dispatch = createEventDispatcher()
+  import pell from 'pell'
 
   export let house = {}
   export let buttonText
@@ -9,6 +10,24 @@
     'Entire house',
     'Room'
   ]
+
+  onMount(() => {
+    const editor = pell.init({
+      element: document.getElementById('editor'),
+      onChange: html => house.description = html,
+      defaultParagraphSeparator: 'p',
+      styleWithCSS: true,
+      actions: [
+        'bold',
+        'underline',
+        {
+          name: 'italic',
+          result: () => pell.exec('italic')
+        },
+      ]
+    })
+    editor.content.innerHTML = house.description || ''
+  })
 
 	const submit = () => {
     dispatch('submit', {
@@ -49,10 +68,10 @@
     <label>House picture URL</label>
     <input required bind:value={house.picture} type="text" placeholder="House picture URL" />
   </p>
-  <p>
+  <div>
     <label>House description</label>
-    <textarea required bind:value={house.description}></textarea>
-  </p>
+    <div id="editor"></div>
+  </div>
 
   <div class="grid">
     <div>

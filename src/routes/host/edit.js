@@ -1,6 +1,7 @@
+import sanitizeHtml from 'sanitize-html'
+
 import House from '../../models/house.js'
 import User from '../../models/user.js'
-
 export const post = async (req, res, next) => {
   const houseData = req.body.house
 
@@ -33,6 +34,10 @@ export const post = async (req, res, next) => {
 
           return
         }
+
+        houseData.description = sanitizeHtml(houseData.description, {
+          allowedTags: [ 'b', 'i', 'em', 'strong', 'p', 'br' ]
+        })
 
         House.update(houseData, {
           where: {

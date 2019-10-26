@@ -1,3 +1,5 @@
+import sanitizeHtml from 'sanitize-html'
+
 import House from '../../models/house.js'
 import User from '../../models/user.js'
 
@@ -15,6 +17,10 @@ export const post = async (req, res, next) => {
 
     return
   }
+
+  houseData.description = sanitizeHtml(houseData.description, {
+    allowedTags: [ 'b', 'i', 'em', 'strong', 'p', 'br' ]
+  })
 
   const userEmail = req.session.passport.user
   User.findOne({ where: { email: userEmail }}).then(user => {

@@ -27,6 +27,10 @@
       ]
     })
     editor.content.innerHTML = house.description || ''
+
+    document.querySelector('#fileUpload').addEventListener('change', event => {
+      handleImageUpload(event)
+    })
   })
 
 	const submit = () => {
@@ -34,6 +38,26 @@
       'house': house
     })
   }
+
+  const handleImageUpload = event => {
+    const files = event.target.files
+    const formData = new FormData()
+    formData.append('image', files[0])
+
+    fetch('/host/image', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      house.picture = data.path
+    })
+    .catch(error => {
+      console.error(error)
+    })
+
+  }
+
 </script>
 
 <style>
@@ -66,7 +90,10 @@
   </p>
   <p>
     <label>House picture URL</label>
-    <input required bind:value={house.picture} type="text" placeholder="House picture URL" />
+    <input type="file" id="fileUpload" accept="image/*" />
+    {#if house.picture}
+      <img src={house.picture} width="200" alt="House image" />
+    {/if}
   </p>
   <div>
     <label>House description</label>

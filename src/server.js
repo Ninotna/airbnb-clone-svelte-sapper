@@ -7,6 +7,7 @@ import * as sapper from '@sapper/server'
 import passport from 'passport'
 import { Strategy as LocalStrategy } from 'passport-local'
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
+import fileupload from 'express-fileupload'
 
 import { sequelize } from './database.js'
 
@@ -77,6 +78,7 @@ polka()
 			},
 			store: sessionStore,
 		}),
+		fileupload(),
 		bodyParser.json({
 			verify: (req, res, buf) => { //make rawBody available
 				req.rawBody = buf
